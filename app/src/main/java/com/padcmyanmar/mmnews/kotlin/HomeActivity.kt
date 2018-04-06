@@ -19,23 +19,36 @@ class HomeActivity : AppCompatActivity() {
         fab.setOnClickListener { view ->
 
             var addResult: Int = addTheseTwo(2410, 1876)
-            var todayDate : Date? = null //Date()
+            var todayDate: Date? = null //Date()
             var isToRestToday = isRestDay(todayDate)
-            var isToRestStr : String
-            if(isToRestToday) {
+            var isToRestStr: String
+            if (isToRestToday) {
                 isToRestStr = "rest"
             } else {
                 isToRestStr = "work"
             }
 
-            var isTappingFAB : String
-            if(fab is FloatingActionButton)
+            var isTappingFAB: String
+            if (fab is FloatingActionButton)
                 isTappingFAB = "tapping FAB"
             else
                 isTappingFAB = "not tapping FAB"
 
+            var degrees = listOf("M.Med (Int.Med)(Nus, S'pore)",
+                    "M.Med.Sc (Int,Med)",
+                    "MA cad MED (UK)",
+                    "Fellowship in interventional Cardiology (Seoul, Korea)",
+                    "Consultant Heart & General Physician")
+
+            var degreesPresentable = getDegreesPresentableWithWhile(degrees)
+
+            /*
             Snackbar.make(view, "The result is $addResult and today is to $isToRestStr. " +
                     "Also you are $isTappingFAB", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+                    */
+
+            Snackbar.make(view, "degreesPresentable : $degreesPresentable", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
     }
@@ -67,7 +80,7 @@ class HomeActivity : AppCompatActivity() {
      * Find out if the date is to rest or not.
      */
     private fun isRestDay(date: Date?): Boolean {
-        if(date == null)
+        if (date == null)
             return true
 
         var calendar: Calendar = Calendar.getInstance()
@@ -77,5 +90,23 @@ class HomeActivity : AppCompatActivity() {
             return true
         }
         return false
+    }
+
+    private fun getDegreesPresentable(degrees: List<String>): String {
+        var presentableDegrees: String = ""
+        for (degree in degrees) {
+            presentableDegrees = "$presentableDegrees, $degree"
+        }
+        return presentableDegrees
+    }
+
+    private fun getDegreesPresentableWithWhile(degrees: List<String>): String {
+        var presentableDegrees : String = ""
+        var index = 0
+        while (index < degrees.size) {
+            presentableDegrees = "$presentableDegrees, $degrees[index]"
+            index++
+        }
+        return presentableDegrees
     }
 }
