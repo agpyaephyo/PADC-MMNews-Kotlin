@@ -1,11 +1,13 @@
-package com.padcmyanmar.mmnews.kotlin
+package com.padcmyanmar.mmnews.kotlin.activities
 
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.padcmyanmar.mmnews.kotlin.MMNewsApp
+import com.padcmyanmar.mmnews.kotlin.R
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 
@@ -48,8 +50,12 @@ class HomeActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
                     */
 
+            /*
             Snackbar.make(view, "degreesPresentable : $degreesPresentable", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
+                    */
+
+            tryOutCollections()
         }
     }
 
@@ -86,12 +92,15 @@ class HomeActivity : AppCompatActivity() {
         var calendar: Calendar = Calendar.getInstance()
         calendar.time = date
         var dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-        if (dayOfMonth / 3 == 0) {
+        if (dayOfMonth / 3 == 0 && isRestDate(date)) {
             return true
         }
         return false
     }
 
+    /**
+     * Get presentable comma separated degrees from the list.
+     */
     private fun getDegreesPresentable(degrees: List<String>): String {
         var presentableDegrees: String = ""
         for (degree in degrees) {
@@ -100,13 +109,75 @@ class HomeActivity : AppCompatActivity() {
         return presentableDegrees
     }
 
+    /**
+     * Get presentable comma separated degrees from the list - with while loop.
+     */
     private fun getDegreesPresentableWithWhile(degrees: List<String>): String {
-        var presentableDegrees : String = ""
+        var presentableDegrees: String = ""
         var index = 0
         while (index < degrees.size) {
             presentableDegrees = "$presentableDegrees, $degrees[index]"
             index++
         }
         return presentableDegrees
+    }
+
+    /**
+     * Check the date if it is to rest or not.
+     */
+    private fun isRestDate(dateToCheck: Date): Boolean {
+        var calendar = Calendar.getInstance()
+        calendar.time = dateToCheck
+        when (calendar.get(Calendar.DAY_OF_WEEK)) {
+            0 -> return true
+            1 -> return true
+            2 -> return false
+            3 -> return false
+            4 -> return true
+            5 -> return true
+            6 -> return false
+            else -> return true
+        }
+    }
+
+    /**
+     * Find out if your age is to fool around.
+     */
+    private fun ageToFoolAround(age: Int): String {
+        if (age in 19..24)
+            return "Yes"
+        else
+            return "No"
+    }
+
+    /**
+     * See how "step" works in a loop.
+     */
+    private fun howRangeAndStepWorks() {
+        for (index in 1..15 step 2)
+            Log.d(MMNewsApp.TAG, "1..15 step 2 : $index")
+
+        for (index in 30 downTo 0 step 3)
+            Log.d(MMNewsApp.TAG, "30 downTo 0 step 3 : $index")
+    }
+
+    private fun tryOutCollections() {
+        val degrees = listOf("M.Med (Int.Med)(Nus, S'pore)",
+                "M.Med.Sc (Int,Med)",
+                "MA cad MED (UK)",
+                "Fellowship in interventional Cardiology (Seoul, Korea)",
+                "Consultant Heart & General Physician")
+
+        /*
+        val coolDegree = "M.Med.Sc (Int,Med)"
+        if(coolDegree in degrees)
+            Log.d(MMNewsApp.TAG, "Having $coolDegree is pretty awesome.")
+            */
+
+        degrees
+                .filter { it.startsWith("M") }
+                .sortedBy { it }
+                .map { it.toUpperCase() }
+                .forEach { Log.d(MMNewsApp.TAG, "Having $it is pretty awesome.") }
     }
 }
