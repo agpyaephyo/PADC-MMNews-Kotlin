@@ -15,7 +15,10 @@ class HomeActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+
+            var addResult: Int = addTheseTwo(2410, 1876)
+
+            Snackbar.make(view, "The result is $addResult", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
     }
@@ -34,5 +37,12 @@ class HomeActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    /**
+     * Add two integer from parameter and return the result.
+     */
+    private fun addTheseTwo(varOne: Int, varTwo: Int): Int {
+        return varOne + varTwo
     }
 }
