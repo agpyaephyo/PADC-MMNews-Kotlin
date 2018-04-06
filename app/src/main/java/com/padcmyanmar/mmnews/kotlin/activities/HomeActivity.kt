@@ -8,8 +8,10 @@ import android.view.Menu
 import android.view.MenuItem
 import com.padcmyanmar.mmnews.kotlin.MMNewsApp
 import com.padcmyanmar.mmnews.kotlin.R
+import com.padcmyanmar.mmnews.kotlin.data.vos.NewsVO
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeActivity : AppCompatActivity() {
 
@@ -57,6 +59,14 @@ class HomeActivity : AppCompatActivity() {
 
             tryOutCollections()
         }
+
+        var news : NewsVO = NewsVO()
+        news.newsId = "PADC-12345"
+        news.brief = "Handle action bar item clicks here."
+        news.details = "The action bar will automatically handle clicks on the Home/Up button, " +
+                "so long as you specify a parent activity in AndroidManifest.xml."
+        news.postedDate = "2018-03-27"
+        news.images = ArrayList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
