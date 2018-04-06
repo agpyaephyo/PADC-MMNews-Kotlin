@@ -1,4 +1,13 @@
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/tools">
     <string name="app_name">PADC-MMNews-Kotlin</string>
     <string name="action_settings">Settings</string>
+
+    <string name="msg_generic_no_data">No Data to Display</string>
+    <string name="lbl_refresh">Refresh</string>
+
+    <string name="dummy_news">မေယုတောင်အရှေ့ဘက် ဘူးသီးတောင်-အငူမော်လမ်းမကြီးအား ပြန်လည်ပြုပြင်ခြင်းများ စတင်ဆောင်ရွက်နေပြီး တံတားဆောက်လုပ်မည့် အတိုင်းအတာ၊ တံတားအူကြောင်း ရွေးချယ်ခြင်းများကို တာဝန်ရှိသူများ ကွင်းဆင်းစစ်ဆေးခဲ့ကြောင်း</string>
+    <string name="btn_comment_news">Comment</string>
+    <string name="btn_send_to_news">Send To</string>
+
+    <string name="format_news_statistical_data"><xliff:g id="like_count">%1$d</xliff:g> Likes - <xliff:g id="comment_count">%2$d</xliff:g> Comments and Sent to <xliff:g id="sent_count">%3$d</xliff:g> people</string>
 </resources>

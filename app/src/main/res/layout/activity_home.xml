@@ -25,13 +25,16 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Hello Kotlin !"
-            android:textColor="@color/primary_text"
-            android:textSize="@dimen/text_regular_3x"
+        <com.padcmyanmar.mmnews.kotlin.components.SmartRecyclerView
+            android:id="@+id/rvNews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/vpEmptyNews"
+            layout="@layout/view_pod_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             />
 
     </RelativeLayout>
