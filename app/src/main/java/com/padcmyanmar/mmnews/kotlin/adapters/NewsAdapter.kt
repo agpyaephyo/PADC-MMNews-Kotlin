@@ -14,8 +14,4 @@ class NewsAdapter(context: Context,
         val newsItemView = mLayoutInflator.inflate(R.layout.view_item_news, parent, false)
         return NewsViewHolder(newsItemView, mNewsItemDelegate)
     }
-
-    override fun getItemCount(): Int {
-        return 24
-    }
 }

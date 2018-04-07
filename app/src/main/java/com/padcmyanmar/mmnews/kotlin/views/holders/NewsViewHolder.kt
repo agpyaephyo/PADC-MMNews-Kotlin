@@ -23,19 +23,19 @@ class NewsViewHolder(itemView: View, private val mDelegate: NewsItemDelegate) : 
         itemView.tvPublishedDate!!.text = data.postedDate
 
         itemView.tvBriefNews.text = data.brief
-        if (!data.images.isEmpty()) {
+        if (!data.images!!.isEmpty()) {
             itemView.ivNewsHeroImage!!.visibility = View.VISIBLE
             Glide.with(itemView.context)
-                    .load(data.images[0])
+                    .load(data.images!![0])
                     .into(itemView.ivNewsHeroImage)
         } else {
             itemView.ivNewsHeroImage!!.visibility = View.GONE
         }
 
         val statisticalData = itemView.context.getString(R.string.format_news_statistical_data,
-                data.favoriteActions.size,
-                data.commentActions.size,
-                data.sentToActions.size)
+                data.favoriteActions!!.size,
+                data.commentActions!!.size,
+                data.sentToActions!!.size)
         itemView.tvNewsStatisticalData!!.text = statisticalData
     }
 

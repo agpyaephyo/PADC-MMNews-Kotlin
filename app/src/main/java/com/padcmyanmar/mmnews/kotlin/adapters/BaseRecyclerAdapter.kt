@@ -23,7 +23,7 @@ abstract class BaseRecyclerAdapter<T, W>(context: Context) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<W>, position: Int) {
-        //holder.setData(mData!![position])
+        holder.setData(mData!![position])
     }
 
     override fun getItemCount(): Int {

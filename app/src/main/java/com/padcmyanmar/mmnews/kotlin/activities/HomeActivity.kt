@@ -2,48 +2,36 @@ package com.padcmyanmar.mmnews.kotlin.activities
 
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
-import android.support.v7.app.AppCompatActivity
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.padcmyanmar.mmnews.kotlin.MMNewsApp
 import com.padcmyanmar.mmnews.kotlin.R
 import com.padcmyanmar.mmnews.kotlin.adapters.NewsAdapter
+import com.padcmyanmar.mmnews.kotlin.components.SmartScrollListener
+import com.padcmyanmar.mmnews.kotlin.data.models.NewsAppModel
 import com.padcmyanmar.mmnews.kotlin.data.vos.NewsVO
 import com.padcmyanmar.mmnews.kotlin.delegates.NewsItemDelegate
+import com.padcmyanmar.mmnews.kotlin.events.DataEvent
+import com.padcmyanmar.mmnews.kotlin.events.ErrorEvent
 import kotlinx.android.synthetic.main.activity_home.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HomeActivity : AppCompatActivity(), NewsItemDelegate {
-    override fun onTapComment() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+class HomeActivity : BaseActivity(), NewsItemDelegate {
 
-    override fun onTapSendTo() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onTapFavorite() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onTapStatistics() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onTapNews(news: NewsVO?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    private var newsAdapter: NewsAdapter? = null
+    private var mNewsAdapter: NewsAdapter? = null
+    private var mSmartScrollListener: SmartScrollListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
 
         fab.setOnClickListener { view ->
 
@@ -94,10 +82,28 @@ class HomeActivity : AppCompatActivity(), NewsItemDelegate {
         news.images = ArrayList<String>()
 
         rvNews.setEmptyView(vpEmptyNews)
-
         rvNews.layoutManager = LinearLayoutManager(applicationContext)
-        newsAdapter = NewsAdapter(applicationContext, this)
-        rvNews.adapter = newsAdapter
+
+        mSmartScrollListener = SmartScrollListener(object : SmartScrollListener.OnSmartScrollListener {
+            override fun onListEndReach() {
+                Snackbar.make(rvNews, "Loading more data.", Snackbar.LENGTH_LONG).show()
+                swipeRefreshLayout.isRefreshing = true
+                NewsAppModel.getInstance().loadNews()
+            }
+        })
+        rvNews.addOnScrollListener(mSmartScrollListener)
+
+        mNewsAdapter = NewsAdapter(applicationContext, this)
+        rvNews.adapter = mNewsAdapter
+
+        swipeRefreshLayout.isRefreshing = true
+        NewsAppModel.getInstance().loadNews()
+
+        swipeRefreshLayout.setOnRefreshListener {
+            val newsAdapterVal = mNewsAdapter
+            newsAdapterVal!!.clearData()
+            NewsAppModel.getInstance().forceLoadNews()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -220,5 +226,45 @@ class HomeActivity : AppCompatActivity(), NewsItemDelegate {
                 .sortedBy { it }
                 .map { it.toUpperCase() }
                 .forEach { Log.d(MMNewsApp.TAG, "Having $it is pretty awesome.") }
+    }
+
+    override fun onTapComment() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onTapSendTo() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onTapFavorite() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onTapStatistics() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onTapNews(news: NewsVO?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onNewsLoadedEvent(newsLoadedEvent: DataEvent.NewsLoadedEvent) {
+        swipeRefreshLayout.isRefreshing = false
+        mNewsAdapter!!.appendNewData(newsLoadedEvent.loadedNews as MutableList<NewsVO>)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onErrorNewsLoadedEvent(apiErrorEvent: ErrorEvent.ApiErrorEvent) {
+        swipeRefreshLayout.isRefreshing = false
+        Snackbar.make(rvNews, "ERROR : " + apiErrorEvent.getMsg(), Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEmptyNewsLoadedEvent(emptyDataLoadedEvent: DataEvent.EmptyDataLoadedEvent) {
+        swipeRefreshLayout.isRefreshing = false
+        Snackbar.make(rvNews, "ERROR : " + emptyDataLoadedEvent.errorMsg, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
     }
 }

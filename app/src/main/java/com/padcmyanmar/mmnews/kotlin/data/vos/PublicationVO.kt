@@ -1,7 +1,7 @@
 package com.padcmyanmar.mmnews.kotlin.data.vos
 
-class PublicationVO(var publicationId: String = "",
-                    var title: String = "",
-                    var logo: String = "") {
+import com.google.gson.annotations.SerializedName
 
-}
+class PublicationVO(@SerializedName("publication-id") var publicationId: String = "",
+                    @SerializedName("title") var title: String = "",
+                    @SerializedName("logo") var logo: String = "")
