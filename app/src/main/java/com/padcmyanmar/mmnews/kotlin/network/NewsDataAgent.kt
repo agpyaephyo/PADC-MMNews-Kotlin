@@ -46,7 +46,7 @@ class NewsDataAgent {
     }
 
     fun loadNews(accessToken: String, page: Int) {
-        val newsResponseCall: Call<GetNewsResponse> = mNewsApi.loadMMNews(page, accessToken)
+        val newsResponseCall = mNewsApi.loadMMNews(page, accessToken)
         newsResponseCall.enqueue(object : Callback<GetNewsResponse> {
             override fun onFailure(call: Call<GetNewsResponse>?, t: Throwable?) {
                 EventBus.getDefault().post(ErrorEvent.ApiErrorEvent(t))

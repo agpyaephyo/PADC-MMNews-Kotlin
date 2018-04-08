@@ -1,5 +1,6 @@
 package com.padcmyanmar.mmnews.kotlin.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -245,7 +246,8 @@ class HomeActivity : BaseActivity(), NewsItemDelegate {
     }
 
     override fun onTapNews(news: NewsVO?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val intent = Intent(applicationContext, NewsDetailsActivity::class.java)
+        startActivity(intent)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
