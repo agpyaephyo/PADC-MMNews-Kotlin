@@ -3,7 +3,7 @@ package com.padcmyanmar.mmnews.kotlin.persistence.typeconvertors
 import android.arch.persistence.room.TypeConverter
 import java.util.*
 
-object NewsImagesTypeConvertor {
+class NewsImagesTypeConverter {
 
     @TypeConverter
     fun toStringList(imagesCommaSeparated: String): List<String> {

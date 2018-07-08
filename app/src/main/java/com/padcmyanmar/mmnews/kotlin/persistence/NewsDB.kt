@@ -20,7 +20,7 @@ abstract class NewsDB : RoomDatabase() {
     companion object {
 
         private val DB_NAME = "SFC-News.DB"
-        private lateinit var INSTANCE: NewsDB
+        private var INSTANCE: NewsDB? = null
 
         fun getDatabase(context: Context): NewsDB {
             if (INSTANCE == null) {
@@ -28,7 +28,8 @@ abstract class NewsDB : RoomDatabase() {
                         .allowMainThreadQueries() //Remove this after testing. Access to DB should always be from background thread.
                         .build()
             }
-            return INSTANCE
+            val i = INSTANCE
+            return i!!
         }
     }
 }

@@ -3,11 +3,11 @@ package com.padcmyanmar.mmnews.kotlin.data.vos
 import android.arch.persistence.room.*
 import android.text.TextUtils
 import com.google.gson.annotations.SerializedName
-import com.padcmyanmar.mmnews.kotlin.persistence.typeconvertors.NewsImagesTypeConvertor
+import com.padcmyanmar.mmnews.kotlin.persistence.typeconvertors.NewsImagesTypeConverter
 import java.util.ArrayList
 
 @Entity(tableName = "news")
-@TypeConverters(NewsImagesTypeConvertor::class)
+@TypeConverters(NewsImagesTypeConverter::class)
 class NewsVO {
 
     @PrimaryKey(autoGenerate = true)
