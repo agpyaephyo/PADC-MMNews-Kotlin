@@ -11,6 +11,6 @@ class MMNewsApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        //NewsAppModel.getInstance()
+        NewsAppModel.initNewsAppModel(applicationContext)
     }
 }
