@@ -84,21 +84,21 @@ class NewsAppModel private constructor(context : Context) : BaseModel(context) {
 
         //Actual Inserts - with sequence
         val insertedUsers = mTheDB.actedUserDao().insertActedUsers(actedUserList)
-        Log.d(MMNewsApp.TAG, "insertedUsers : $insertedUsers")
+        Log.d(MMNewsApp.TAG, "insertedUsers : ${insertedUsers.size}")
 
         val insertedSentTos = mTheDB.sentToActionDao().insertSentToActions(sentToList)
-        Log.d(MMNewsApp.TAG, "insertedSentTos : $insertedSentTos")
+        Log.d(MMNewsApp.TAG, "insertedSentTos : ${insertedSentTos.size}")
 
         val insertedComments = mTheDB.commentActionDao().insertCommentActions(commentActionList)
-        Log.d(MMNewsApp.TAG, "insertedComments : $insertedComments")
+        Log.d(MMNewsApp.TAG, "insertedComments : ${insertedComments.size}")
 
         val insertedFavorites = mTheDB.favoriteActionDao().insertFavoriteActions(favoriteActionList)
-        Log.d(MMNewsApp.TAG, "insertedFavorites : $insertedFavorites")
+        Log.d(MMNewsApp.TAG, "insertedFavorites : ${insertedFavorites.size}")
 
         val insertedPublications = mTheDB.publicationDao().insertPublications(publicationList)
-        Log.d(MMNewsApp.TAG, "insertedPublications : $insertedPublications")
+        Log.d(MMNewsApp.TAG, "insertedPublications : ${insertedPublications.size}")
 
         val insertedNews = mTheDB.newsDao().insertNews(newsList)
-        Log.d(MMNewsApp.TAG, "insertedNews : $insertedNews")
+        Log.d(MMNewsApp.TAG, "insertedNews : ${insertedNews.size}")
     }
 }
