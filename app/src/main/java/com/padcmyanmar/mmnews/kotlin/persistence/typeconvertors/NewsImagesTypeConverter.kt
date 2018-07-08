@@ -7,8 +7,7 @@ class NewsImagesTypeConverter {
 
     @TypeConverter
     fun toStringList(imagesCommaSeparated: String): List<String> {
-        val imagesArray = imagesCommaSeparated.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        return Arrays.asList(*imagesArray)
+        return imagesCommaSeparated.split(",".toRegex())
     }
 
     @TypeConverter
