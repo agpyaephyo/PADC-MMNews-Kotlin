@@ -8,7 +8,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class NewsAppModel {
+class NewsAppModel private constructor() {
     companion object {
         private var INSTANCE: NewsAppModel? = null
         fun getInstance(): NewsAppModel {
@@ -21,12 +21,8 @@ class NewsAppModel {
         }
     }
 
-    private constructor() {
-        EventBus.getDefault().register(this)
-    }
-
-    private var mNewsPage: Int = 1
-    private var mNewsData: HashMap<String, NewsVO> = HashMap()
+    private var mNewsPage: Int
+    private var mNewsData: HashMap<String, NewsVO>
 
     fun loadNews() {
         NewsDataAgent.getInstance().loadNews(AppConstants.ACCESS_TOKEN, mNewsPage)
@@ -34,7 +30,6 @@ class NewsAppModel {
 
     fun forceLoadNews() {
         mNewsPage = 1
-        mNewsData = HashMap()
         NewsDataAgent.getInstance().loadNews(AppConstants.ACCESS_TOKEN, mNewsPage)
     }
 
@@ -44,5 +39,11 @@ class NewsAppModel {
             mNewsData[news.newsId] = news
         }
         mNewsPage = newsLoadedEvent.loadedPageIndex + 1
+    }
+
+    init {
+        EventBus.getDefault().register(this)
+        mNewsPage = 1
+        mNewsData = HashMap()
     }
 }

@@ -25,7 +25,7 @@ import kotlin.collections.ArrayList
 
 class HomeActivity : BaseActivity(), NewsItemDelegate {
 
-    private var mNewsAdapter: NewsAdapter? = null
+    private lateinit var mNewsAdapter: NewsAdapter
     private var mSmartScrollListener: SmartScrollListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,23 +34,22 @@ class HomeActivity : BaseActivity(), NewsItemDelegate {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener{ view ->
 
             var addResult: Int = addTheseTwo(2410, 1876)
-            var todayDate: Date? = null //Date()
+            var todayDate = Date()
             var isToRestToday = isRestDay(todayDate)
-            var isToRestStr: String
-            if (isToRestToday) {
-                isToRestStr = "rest"
+
+            var isToRestStr = if (isToRestToday) {
+                "rest"
             } else {
-                isToRestStr = "work"
+                "work"
             }
 
-            var isTappingFAB: String
-            if (fab is FloatingActionButton)
-                isTappingFAB = "tapping FAB"
+            var isTappingFAB = if (fab is FloatingActionButton)
+                "tapping FAB"
             else
-                isTappingFAB = "not tapping FAB"
+                "not tapping FAB"
 
             var degrees = listOf("M.Med (Int.Med)(Nus, S'pore)",
                     "M.Med.Sc (Int,Med)",
@@ -58,23 +57,23 @@ class HomeActivity : BaseActivity(), NewsItemDelegate {
                     "Fellowship in interventional Cardiology (Seoul, Korea)",
                     "Consultant Heart & General Physician")
 
-            var degreesPresentable = getDegreesPresentableWithWhile(degrees)
+            var degreesPresentable = getDegreesPresentable(degrees)
 
             /*
-            Snackbar.make(view, "The result is $addResult and today is to $isToRestStr. " +
-                    "Also you are $isTappingFAB", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-                    */
+                    Snackbar.make(view, "The result is $addResult and today is to $isToRestStr. " +
+                            "Also you are $isTappingFAB", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show()
+                            */
 
             /*
-            Snackbar.make(view, "degreesPresentable : $degreesPresentable", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-                    */
+                    Snackbar.make(view, "degreesPresentable : $degreesPresentable", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show()
+                            */
 
             tryOutCollections()
         }
 
-        var news: NewsVO = NewsVO()
+        var news = NewsVO()
         news.newsId = "PADC-12345"
         news.brief = "Handle action bar item clicks here."
         news.details = "The action bar will automatically handle clicks on the Home/Up button, " +
@@ -101,8 +100,7 @@ class HomeActivity : BaseActivity(), NewsItemDelegate {
         NewsAppModel.getInstance().loadNews()
 
         swipeRefreshLayout.setOnRefreshListener {
-            val newsAdapterVal = mNewsAdapter
-            newsAdapterVal!!.clearData()
+            mNewsAdapter.clearData()
             NewsAppModel.getInstance().forceLoadNews()
         }
     }
@@ -139,7 +137,8 @@ class HomeActivity : BaseActivity(), NewsItemDelegate {
 
         var calendar: Calendar = Calendar.getInstance()
         calendar.time = date
-        var dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
         if (dayOfMonth / 3 == 0 && isRestDate(date)) {
             return true
         }
@@ -154,6 +153,7 @@ class HomeActivity : BaseActivity(), NewsItemDelegate {
         for (degree in degrees) {
             presentableDegrees = "$presentableDegrees, $degree"
         }
+
         return presentableDegrees
     }
 
@@ -174,17 +174,17 @@ class HomeActivity : BaseActivity(), NewsItemDelegate {
      * Check the date if it is to rest or not.
      */
     private fun isRestDate(dateToCheck: Date): Boolean {
-        var calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance()
         calendar.time = dateToCheck
-        when (calendar.get(Calendar.DAY_OF_WEEK)) {
-            0 -> return true
-            1 -> return true
-            2 -> return false
-            3 -> return false
-            4 -> return true
-            5 -> return true
-            6 -> return false
-            else -> return true
+        return when (calendar.get(Calendar.DAY_OF_WEEK)) {
+            0 -> true
+            1 -> true
+            2 -> false
+            3 -> false
+            4 -> true
+            5 -> true
+            6 -> false
+            else -> true
         }
     }
 

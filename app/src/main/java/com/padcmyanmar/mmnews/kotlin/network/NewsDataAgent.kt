@@ -13,7 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class NewsDataAgent {
+class NewsDataAgent private constructor() {
 
     companion object {
         private var INSTANCE: NewsDataAgent? = null
@@ -28,22 +28,6 @@ class NewsDataAgent {
     }
 
     private val mNewsApi: NewsApi
-
-    private constructor() {
-        val okHttpClient = OkHttpClient.Builder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .build()
-
-        val retrofit = Retrofit.Builder()
-                .baseUrl("http://padcmyanmar.com/padc-3/mm-news/apis/")
-                .addConverterFactory(GsonConverterFactory.create(Gson()))
-                .client(okHttpClient)
-                .build()
-
-        mNewsApi = retrofit.create(NewsApi::class.java)
-    }
 
     fun loadNews(accessToken: String, page: Int) {
         val newsResponseCall = mNewsApi.loadMMNews(page, accessToken)
@@ -67,5 +51,19 @@ class NewsDataAgent {
                 }
             }
         })
+    }
+
+    init {
+        val okHttpClient = OkHttpClient.Builder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .build()
+        val retrofit = Retrofit.Builder()
+                .baseUrl("http://padcmyanmar.com/padc-3/mm-news/apis/")
+                .addConverterFactory(GsonConverterFactory.create(Gson()))
+                .client(okHttpClient)
+                .build()
+        mNewsApi = retrofit.create(NewsApi::class.java)
     }
 }

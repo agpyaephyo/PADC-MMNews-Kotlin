@@ -9,7 +9,8 @@ import com.padcmyanmar.mmnews.kotlin.data.vos.NewsVO
 import com.padcmyanmar.mmnews.kotlin.delegates.NewsItemDelegate
 import kotlinx.android.synthetic.main.view_item_news.view.*
 
-class NewsViewHolder(itemView: View, private val mDelegate: NewsItemDelegate) : BaseViewHolder<NewsVO>(itemView) {
+class NewsViewHolder(itemView: View,
+                     private val mDelegate: NewsItemDelegate) : BaseViewHolder<NewsVO>(itemView) {
 
     override fun setData(data: NewsVO) {
         mData = data
