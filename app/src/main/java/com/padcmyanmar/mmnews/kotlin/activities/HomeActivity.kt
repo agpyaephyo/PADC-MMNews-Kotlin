@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
+import android.support.v4.view.GravityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
@@ -33,6 +34,9 @@ class HomeActivity : BaseActivity(), NewsItemDelegate {
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
 
         fab.setOnClickListener { view ->
 
@@ -117,6 +121,11 @@ class HomeActivity : BaseActivity(), NewsItemDelegate {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        if (item.itemId == android.R.id.home) {
+            drawerLayout.openDrawer(GravityCompat.END)
+            return true
+        }
+
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
