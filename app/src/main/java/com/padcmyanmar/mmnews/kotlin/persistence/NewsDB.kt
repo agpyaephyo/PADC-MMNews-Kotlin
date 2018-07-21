@@ -7,14 +7,10 @@ import android.content.Context
 import com.padcmyanmar.mmnews.kotlin.data.vos.*
 import com.padcmyanmar.mmnews.kotlin.persistence.dao.*
 
-@Database(entities = arrayOf(ActedUserVO::class, FavoriteActionVO::class, CommentActionVO::class, SentToActionVO::class, PublicationVO::class, NewsVO::class), version = 1, exportSchema = false)
+@Database(entities = [(NewsVO::class)],
+        version = 2, exportSchema = false)
 abstract class NewsDB : RoomDatabase() {
 
-    abstract fun actedUserDao(): ActedUserDao
-    abstract fun favoriteActionDao(): FavoriteActionDao
-    abstract fun commentActionDao(): CommentActionDao
-    abstract fun sentToActionDao(): SentToActionDao
-    abstract fun publicationDao(): PublicationDao
     abstract fun newsDao(): NewsDao
 
     companion object {
@@ -25,6 +21,7 @@ abstract class NewsDB : RoomDatabase() {
         fun getDatabase(context: Context): NewsDB {
             if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(context, NewsDB::class.java, DB_NAME)
+                        .fallbackToDestructiveMigration()
                         .allowMainThreadQueries() //Remove this after testing. Access to DB should always be from background thread.
                         .build()
             }

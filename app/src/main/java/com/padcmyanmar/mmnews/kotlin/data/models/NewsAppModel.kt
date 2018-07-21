@@ -6,7 +6,12 @@ import com.padcmyanmar.mmnews.kotlin.MMNewsApp
 import com.padcmyanmar.mmnews.kotlin.data.vos.*
 import com.padcmyanmar.mmnews.kotlin.events.DataEvent
 import com.padcmyanmar.mmnews.kotlin.network.NewsDataAgent
+import com.padcmyanmar.mmnews.kotlin.network.responses.GetNewsResponse
 import com.padcmyanmar.mmnews.kotlin.utils.AppConstants
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -37,7 +42,36 @@ class NewsAppModel private constructor(context : Context) : BaseModel(context) {
     }
 
     fun loadNews() {
-        NewsDataAgent.getInstance().loadNews(AppConstants.ACCESS_TOKEN, mNewsPage)
+        //NewsDataAgent.getInstance().loadNews(AppConstants.ACCESS_TOKEN, mNewsPage)
+
+        mTheApi.loadMMNews(mNewsPage, AppConstants.ACCESS_TOKEN)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<GetNewsResponse> {
+                    override fun onNext(newsResponse: GetNewsResponse) {
+                        if (newsResponse.getNewsList().isNotEmpty()) {
+
+                            persistNewsList(newsResponse.getNewsList())
+                            mNewsPage = newsResponse.getPageNo() + 1
+
+                            //newsListLD.setValue(newsResponse!!.getNewsList())
+                        } else {
+                            //errorPS.setValue("No data could be loaded for now. Pls try again later.")
+                        }
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+
+                    }
+
+                    override fun onError(e: Throwable) {
+                        //errorPS.setValue(e.message)
+                    }
+
+                    override fun onComplete() {
+
+                    }
+                })
     }
 
     fun forceLoadNews() {
@@ -52,52 +86,6 @@ class NewsAppModel private constructor(context : Context) : BaseModel(context) {
     }
 
     private fun persistNewsList(newsList: List<NewsVO>) {
-        //Prepare data to insert
-        val publicationList = ArrayList<PublicationVO>()
-        val favoriteActionList = ArrayList<FavoriteActionVO>()
-        val commentActionList = ArrayList<CommentActionVO>()
-        val sentToList = ArrayList<SentToActionVO>()
-        val actedUserList = ArrayList<ActedUserVO>()
-
-        for (news in newsList) {
-            publicationList.add(news.publication!!)
-            for (favoriteAction in news.favoriteActions!!) {
-                favoriteAction.newsId = news.newsId
-
-                favoriteActionList.add(favoriteAction)
-                actedUserList.add(favoriteAction.actedUser!!)
-            }
-            for (commentAction in news.commentActions!!) {
-                commentAction.newsId = news.newsId
-
-                commentActionList.add(commentAction)
-                actedUserList.add(commentAction.actedUser!!)
-            }
-            for (sentTo in news.sentToActions!!) {
-                sentTo.newsId = news.newsId
-
-                sentToList.add(sentTo)
-                actedUserList.add(sentTo.sender!!)
-                actedUserList.add(sentTo.receiver!!)
-            }
-        }
-
-        //Actual Inserts - with sequence
-        val insertedUsers = mTheDB.actedUserDao().insertActedUsers(actedUserList)
-        Log.d(MMNewsApp.TAG, "insertedUsers : ${insertedUsers.size}")
-
-        val insertedSentTos = mTheDB.sentToActionDao().insertSentToActions(sentToList)
-        Log.d(MMNewsApp.TAG, "insertedSentTos : ${insertedSentTos.size}")
-
-        val insertedComments = mTheDB.commentActionDao().insertCommentActions(commentActionList)
-        Log.d(MMNewsApp.TAG, "insertedComments : ${insertedComments.size}")
-
-        val insertedFavorites = mTheDB.favoriteActionDao().insertFavoriteActions(favoriteActionList)
-        Log.d(MMNewsApp.TAG, "insertedFavorites : ${insertedFavorites.size}")
-
-        val insertedPublications = mTheDB.publicationDao().insertPublications(publicationList)
-        Log.d(MMNewsApp.TAG, "insertedPublications : ${insertedPublications.size}")
-
         val insertedNews = mTheDB.newsDao().insertNews(newsList)
         Log.d(MMNewsApp.TAG, "insertedNews : ${insertedNews.size}")
     }
