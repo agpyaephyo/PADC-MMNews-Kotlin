@@ -42,4 +42,5 @@
     <dimen name="bg_dialog_button_radius">4dp</dimen>
     <dimen name="items_photo_size">150dp</dimen>
     <dimen name="left_menu_width">300dp</dimen>
+    <dimen name="login_user_info_height">220dp</dimen>
 </resources>

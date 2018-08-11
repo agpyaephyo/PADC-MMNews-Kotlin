@@ -2,6 +2,7 @@ package com.padcmyanmar.mmnews.kotlin.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
@@ -9,22 +10,37 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.padcmyanmar.mmnews.kotlin.MMNewsApp
 import com.padcmyanmar.mmnews.kotlin.R
 import com.padcmyanmar.mmnews.kotlin.adapters.NewsAdapter
 import com.padcmyanmar.mmnews.kotlin.components.SmartScrollListener
 import com.padcmyanmar.mmnews.kotlin.data.models.NewsAppModel
 import com.padcmyanmar.mmnews.kotlin.data.vos.NewsVO
+import com.padcmyanmar.mmnews.kotlin.delegates.BeforeLoginDelegate
 import com.padcmyanmar.mmnews.kotlin.delegates.NewsItemDelegate
 import com.padcmyanmar.mmnews.kotlin.events.DataEvent
 import com.padcmyanmar.mmnews.kotlin.events.ErrorEvent
+import com.padcmyanmar.mmnews.kotlin.views.pods.AccountControlViewPod
+import com.padcmyanmar.mmnews.kotlin.views.pods.BeforeLoginViewPod
 import kotlinx.android.synthetic.main.activity_home.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HomeActivity : BaseActivity(), NewsItemDelegate {
+class HomeActivity : BaseActivity(), NewsItemDelegate, BeforeLoginDelegate {
+    override fun onTapLogin() {
+        val intent = Intent(applicationContext, AccountControlActivity::class.java)
+        intent.putExtra(AccountControlActivity.ACTION_TYPE, AccountControlActivity.ACTION_TYPE_LOGIN)
+        startActivity(intent)
+    }
+
+    override fun onTapRegister() {
+        val intent = Intent(applicationContext, AccountControlActivity::class.java)
+        intent.putExtra(AccountControlActivity.ACTION_TYPE, AccountControlActivity.ACTION_TYPE_REGISTER)
+        startActivity(intent)
+    }
 
     private var mNewsAdapter: NewsAdapter? = null
     private var mSmartScrollListener: SmartScrollListener? = null
@@ -84,7 +100,7 @@ class HomeActivity : BaseActivity(), NewsItemDelegate {
         news.details = "The action bar will automatically handle clicks on the Home/Up button, " +
                 "so long as you specify a parent activity in AndroidManifest.xml."
         news.postedDate = "2018-03-27"
-        news.images = ArrayList<String>()
+        news.images = ArrayList()
 
         rvNews.setEmptyView(vpEmptyNews)
         rvNews.layoutManager = LinearLayoutManager(applicationContext)
@@ -109,6 +125,29 @@ class HomeActivity : BaseActivity(), NewsItemDelegate {
             newsAdapterVal!!.clearData()
             NewsAppModel.getInstance().forceLoadNews()
         }
+
+        navigationView.setNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.menu_latest_news -> {
+                    Snackbar.make(navigationView, "Tapped Latest News", Snackbar.LENGTH_LONG).show()
+                }
+                R.id.menu_news_just_for_you -> {
+                    Snackbar.make(navigationView, "Tapped News Just For You", Snackbar.LENGTH_LONG).show()
+                }
+                R.id.menu_favorite_news -> {
+                    Snackbar.make(navigationView, "Tapped Favorite News", Snackbar.LENGTH_LONG).show()
+                }
+            }
+            for(menuItemIndex in 0 until navigationView.menu.size()) {
+                navigationView.menu.getItem(menuItemIndex).isChecked = false
+            }
+            it.isChecked = true
+            drawerLayout.closeDrawer(GravityCompat.END)
+            return@setNavigationItemSelectedListener true
+        }
+
+        val vpAccountControl = navigationView.getHeaderView(0) as AccountControlViewPod
+        vpAccountControl.setDelegate(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

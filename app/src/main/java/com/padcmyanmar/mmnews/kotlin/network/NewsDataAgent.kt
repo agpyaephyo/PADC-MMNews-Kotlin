@@ -3,7 +3,9 @@ package com.padcmyanmar.mmnews.kotlin.network
 import com.google.gson.Gson
 import com.padcmyanmar.mmnews.kotlin.events.DataEvent
 import com.padcmyanmar.mmnews.kotlin.events.ErrorEvent
+import com.padcmyanmar.mmnews.kotlin.events.UserSessionEvent
 import com.padcmyanmar.mmnews.kotlin.network.responses.GetNewsResponse
+import com.padcmyanmar.mmnews.kotlin.network.responses.LoginUserResponse
 import okhttp3.OkHttpClient
 import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
@@ -55,15 +57,40 @@ class NewsDataAgent {
             override fun onResponse(call: Call<GetNewsResponse>, response: Response<GetNewsResponse>) {
                 val newsResponse: GetNewsResponse? = response.body()
                 if (newsResponse != null
-                        && newsResponse.getCode() == 200
+                        && newsResponse.getCode() == NewsApi.RC_SUCCESS
                         && newsResponse.getNewsList().isNotEmpty()) {
                     val newsLoadedEvent = DataEvent.NewsLoadedEvent(newsResponse.getPageNo(), newsResponse.getNewsList())
                     EventBus.getDefault().post(newsLoadedEvent)
                 } else {
-                    if(newsResponse != null)
+                    if (newsResponse != null)
                         EventBus.getDefault().post(DataEvent.EmptyDataLoadedEvent(newsResponse.getMessage()))
                     else
                         EventBus.getDefault().post(DataEvent.EmptyDataLoadedEvent())
+                }
+            }
+        })
+    }
+
+    fun loginUser(phoneNo: String, password: String) {
+        val loginUserCall = mNewsApi.loginUser(phoneNo, password)
+        loginUserCall.enqueue(object : Callback<LoginUserResponse> {
+            override fun onFailure(call: Call<LoginUserResponse>?, t: Throwable?) {
+                EventBus.getDefault().post(ErrorEvent.ApiErrorEvent(t))
+            }
+
+            override fun onResponse(call: Call<LoginUserResponse>, response: Response<LoginUserResponse>) {
+                val loginUserResponse: LoginUserResponse? = response.body()
+                if (loginUserResponse != null
+                        && loginUserResponse.code == NewsApi.RC_SUCCESS
+                        && loginUserResponse.loginUser != null) {
+                    val loginUserSuccessEvent = UserSessionEvent.LoginUserSuccessEvent(loginUserResponse.loginUser)
+                    EventBus.getDefault().post(loginUserSuccessEvent)
+                } else {
+                    if(loginUserResponse != null) {
+                        EventBus.getDefault().post(DataEvent.EmptyDataLoadedEvent(loginUserResponse.message))
+                    } else {
+                        EventBus.getDefault().post(DataEvent.EmptyDataLoadedEvent())
+                    }
                 }
             }
         })

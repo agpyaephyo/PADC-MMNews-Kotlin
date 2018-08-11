@@ -4,11 +4,10 @@ import com.padcmyanmar.mmnews.kotlin.data.vos.NewsVO
 import com.padcmyanmar.mmnews.kotlin.events.DataEvent
 import com.padcmyanmar.mmnews.kotlin.network.NewsDataAgent
 import com.padcmyanmar.mmnews.kotlin.utils.AppConstants
-import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class NewsAppModel {
+class NewsAppModel : BaseModel() {
     companion object {
         private var INSTANCE: NewsAppModel? = null
         fun getInstance(): NewsAppModel {
@@ -19,10 +18,6 @@ class NewsAppModel {
             val i = INSTANCE
             return i!!
         }
-    }
-
-    private constructor() {
-        EventBus.getDefault().register(this)
     }
 
     private var mNewsPage: Int = 1

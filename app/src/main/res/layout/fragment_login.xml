@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvGreetingMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to PADC-5"
+        android:textColor="#FF0000"
+        android:textSize="18sp"
+        android:layout_centerInParent="true"
+        />
+
+    <ImageView
+        android:id="@+id/ivGreeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/placeholder"
+        android:layout_above="@+id/tvGreetingMsg"
+        android:layout_centerHorizontal="true"
+        />
+
+    <EditText
+        android:id="@+id/etUserPhone"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter your phone number"
+        android:layout_below="@+id/tvGreetingMsg"
+        android:layout_marginLeft="16dp"
+        />
+
+    <EditText
+        android:id="@+id/etUserPassword"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter your password"
+        android:layout_below="@+id/etUserPhone"
+        android:layout_marginLeft="16dp"
+        android:inputType="textPassword"
+        />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_below="@id/etUserPassword"
+        android:layout_alignRight="@id/etUserPassword"
+        />
+
+    <TextView
+        android:id="@+id/btnRegisterNewAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register New Account"
+        android:layout_below="@id/btnLogin"
+        android:layout_alignRight="@id/btnLogin"
+        android:foreground="@drawable/ripple"
+        android:padding="8dp"
+        />
+
+</RelativeLayout>

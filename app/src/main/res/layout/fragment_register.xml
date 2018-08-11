@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp">
+
+        <TextView
+            android:id="@+id/btnNavigateToLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already Login"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/margin_medium"
+            />
+
+        <Button
+            android:id="@+id/btn_sign_in_with_google"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Sign in with Google"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/ic_google"
+            android:drawablePadding="8dp"
+            />
+
+        <Button
+            android:id="@+id/btn_continue_with_facebook"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#475CA8"
+            android:text="Continue with Facebook"
+            android:layout_marginTop="16dp"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/ic_facebook"
+            android:drawablePadding="8dp"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="16dp"
+            />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Let's us know how to call you"
+            android:layout_marginTop="16dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Your phone number, pls ? (we won't call you)"
+            android:layout_marginTop="16dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_phone_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="What do you like to use as your password ?"
+            android:layout_marginTop="16dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/sp_townships"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/townships_array"
+            android:layout_marginTop="16dp"
+            />
+
+        <RadioGroup
+            android:id="@+id/rg_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/rb_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male"
+                />
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/rb_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female"
+                />
+
+        </RadioGroup>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/cb_eula"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please check if you agree our terms &amp; condition"
+            android:layout_marginTop="16dp"
+            />
+
+        <Button
+            android:id="@+id/btn_sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#8EC5C9"
+            android:text="Sign up"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp"
+            />
+
+        <TextView
+            android:id="@+id/btn_terms_and_privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Terms &amp; Privacy Policy"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            />
+
+    </LinearLayout>
+
+</ScrollView>
