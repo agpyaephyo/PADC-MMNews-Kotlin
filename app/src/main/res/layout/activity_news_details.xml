@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -18,7 +19,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/vp_news_details_images"
+                android:id="@+id/vpNewsDetailsImages"
                 android:layout_width="match_parent"
                 android:layout_height="256dp"
                 android:fitsSystemWindows="true" />
@@ -28,47 +29,44 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/iv_publication_logo"
+                    android:id="@+id/ivPublicationLogo"
                     android:layout_width="@dimen/logo_size"
                     android:layout_height="@dimen/logo_size"
-                    android:src="@drawable/img_publication_logo_placeholder"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="@dimen/news_details_publication_logo_margin_bottom"
                     android:layout_marginLeft="@dimen/margin_medium_2"
-                    />
+                    tools:src="@drawable/img_publication_logo_placeholder" />
 
-                <TextView
-                    android:id="@+id/tv_publication_name"
+                <org.mmtextview.components.MMTextView
+                    android:id="@+id/tvPublicationName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Eleven Media"
-                    android:layout_toRightOf="@id/iv_publication_logo"
-                    android:layout_alignTop="@id/iv_publication_logo"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:textSize="@dimen/text_regular_3x"
-                    android:textColor="@color/white_full"
+                    android:layout_alignTop="@id/ivPublicationLogo"
                     android:layout_marginLeft="@dimen/margin_medium_2"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_toRightOf="@id/ivPublicationLogo"
                     android:shadowColor="@color/black_full"
                     android:shadowDx="2"
                     android:shadowDy="2"
                     android:shadowRadius="2"
-                    />
+                    android:textColor="@color/white_full"
+                    android:textSize="@dimen/text_regular_3x"
+                    tools:text="Eleven Media" />
 
-                <TextView
-                    android:id="@+id/tv_published_date"
+                <org.mmtextview.components.MMTextView
+                    android:id="@+id/tvPublishedDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Posted At : Jan 01 - 6:30AM"
-                    android:layout_below="@id/tv_publication_name"
-                    android:layout_alignLeft="@id/tv_publication_name"
+                    android:layout_alignLeft="@id/tvPublicationName"
+                    android:layout_below="@id/tvPublicationName"
                     android:layout_marginTop="@dimen/margin_small"
+                    android:shadowColor="@color/black_full"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
                     android:textColor="@color/white_full"
                     android:textSize="@dimen/text_regular_2x"
-                    android:shadowColor="@color/black_full"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="2"
-                    />
+                    tools:text="Posted At : Jan 01 - 6:30AM" />
 
             </RelativeLayout>
 
@@ -92,16 +90,15 @@
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <TextView
-                android:id="@+id/tv_news_details"
+            <org.mmtextview.components.MMTextView
+                android:id="@+id/tvNewsDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_medium_2"
                 android:lineSpacingMultiplier="1.3"
-                android:text="@string/dummy_news_details"
                 android:paddingBottom="80dp"
                 android:textColor="@color/primary_text"
-                />
+                tools:text="@string/dummy_news_details" />
 
         </RelativeLayout>
 
@@ -111,31 +108,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:weightSum="5"
         android:background="@color/white_full"
         android:orientation="horizontal"
-        android:padding="@dimen/margin_medium_2">
+        android:padding="@dimen/margin_medium_2"
+        android:weightSum="5">
 
-        <TextView
+        <org.mmtextview.components.MMTextView
             android:id="@+id/btn_comment_news"
             style="@style/AccentBorderButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_large_size"
             android:layout_weight="3"
-            android:text="@string/btn_comment_news"
             android:drawableLeft="@drawable/ic_chat_bubble_outline_accent_24dp"
-            />
+            android:text="@string/btn_comment_news" />
 
-        <TextView
+        <org.mmtextview.components.MMTextView
             android:id="@+id/btn_send_to_news"
+            style="@style/AccentButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_large_size"
-            android:layout_weight="2"
-            android:text="@string/btn_send_to_news"
-            style="@style/AccentButton"
-            android:drawableLeft="@drawable/ic_send_white_24dp"
             android:layout_marginLeft="@dimen/margin_medium_2"
-            />
+            android:layout_weight="2"
+            android:drawableLeft="@drawable/ic_send_white_24dp"
+            android:text="@string/btn_send_to_news" />
 
     </LinearLayout>
 

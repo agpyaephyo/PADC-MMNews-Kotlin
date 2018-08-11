@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.padcmyanmar.mmnews.kotlin.views.items.HighlightNewsViewItem xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,25 +8,22 @@
         android:id="@+id/ivNewsBg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/img_news_placeholder"
         android:scaleType="centerCrop"
-        />
+        tools:src="@drawable/img_news_placeholder" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#A000"
-        />
+        android:background="#A000" />
 
-    <TextView
+    <org.mmtextview.components.MMTextView
         android:id="@+id/tvNewsHeadLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="North Korea calls US actions on nuclear programme 'alarming'"
-        android:textSize="@dimen/text_heading_1x"
-        android:textColor="@color/white_full"
         android:layout_centerInParent="true"
         android:padding="@dimen/margin_medium_2"
-        />
+        android:textColor="@color/white_full"
+        android:textSize="@dimen/text_heading_1x"
+        tools:text="North Korea calls US actions on nuclear programme 'alarming'" />
 
 </com.padcmyanmar.mmnews.kotlin.views.items.HighlightNewsViewItem>

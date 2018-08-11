@@ -17,8 +17,7 @@ class HighlightNewsAdapter : PagerAdapter() {
     }
 
     override fun getCount(): Int {
-        //return mData.size
-        return 16
+        return mData.size
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -26,12 +25,17 @@ class HighlightNewsAdapter : PagerAdapter() {
         val viHighlightNews = inflator.inflate(R.layout.view_item_highlight_news, container, false)
                 as HighlightNewsViewItem
 
-        //viHighlightNews.bindData(mData[position])
+        viHighlightNews.bindData(mData[position])
         container.addView(viHighlightNews)
         return viHighlightNews
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as HighlightNewsViewItem)
+    }
+
+    fun setNewData(newsList : List<NewsVO>) {
+        mData = newsList
+        notifyDataSetChanged()
     }
 }

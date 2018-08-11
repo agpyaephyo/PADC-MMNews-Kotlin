@@ -33,6 +33,14 @@ class NewsAppModel : BaseModel() {
         NewsDataAgent.getInstance().loadNews(AppConstants.ACCESS_TOKEN, mNewsPage)
     }
 
+    fun getNews() : List<NewsVO> {
+        return ArrayList<NewsVO>(mNewsData.values)
+    }
+
+    fun getNewsById(newsId : String) : NewsVO? {
+        return mNewsData[newsId]
+    }
+
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     fun onNewsLoadedEvent(newsLoadedEvent: DataEvent.NewsLoadedEvent) {
         for (news: NewsVO in newsLoadedEvent.loadedNews) {

@@ -7,5 +7,5 @@ interface NewsItemDelegate {
     fun onTapSendTo()
     fun onTapFavorite()
     fun onTapStatistics()
-    fun onTapNews(news: NewsVO?)
+    fun onTapNews(news: NewsVO)
 }

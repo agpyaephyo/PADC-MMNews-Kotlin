@@ -26,6 +26,9 @@
         <activity
             android:name=".activities.AccountControlActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.AccountControlActivity2"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

@@ -50,4 +50,8 @@
         <item name="android:lineSpacingMultiplier">1.2</item>
     </style>
 
+    <style name="AppTab" parent="Base.Widget.Design.TabLayout">
+
+    </style>
+
 </resources>

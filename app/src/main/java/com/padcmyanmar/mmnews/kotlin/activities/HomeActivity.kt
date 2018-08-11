@@ -31,14 +31,22 @@ import kotlin.collections.ArrayList
 
 class HomeActivity : BaseActivity(), NewsItemDelegate, BeforeLoginDelegate {
     override fun onTapLogin() {
+        /*
         val intent = Intent(applicationContext, AccountControlActivity::class.java)
         intent.putExtra(AccountControlActivity.ACTION_TYPE, AccountControlActivity.ACTION_TYPE_LOGIN)
+        startActivity(intent)
+        */
+        val intent = AccountControlActivity2.newIntent(applicationContext)
         startActivity(intent)
     }
 
     override fun onTapRegister() {
+        /*
         val intent = Intent(applicationContext, AccountControlActivity::class.java)
         intent.putExtra(AccountControlActivity.ACTION_TYPE, AccountControlActivity.ACTION_TYPE_REGISTER)
+        startActivity(intent)
+        */
+        val intent = AccountControlActivity2.newIntent(applicationContext)
         startActivity(intent)
     }
 
@@ -293,8 +301,8 @@ class HomeActivity : BaseActivity(), NewsItemDelegate, BeforeLoginDelegate {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onTapNews(news: NewsVO?) {
-        val intent = Intent(applicationContext, NewsDetailsActivity::class.java)
+    override fun onTapNews(news: NewsVO) {
+        val intent = NewsDetailsActivity.newIntent(applicationContext, news.newsId)
         startActivity(intent)
     }
 

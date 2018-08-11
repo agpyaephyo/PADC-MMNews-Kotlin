@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import com.padcmyanmar.mmnews.kotlin.views.holders.BaseViewHolder
 import java.util.ArrayList
 
-abstract class BaseRecyclerAdapter<T, W>(context: Context) : RecyclerView.Adapter<BaseViewHolder<W>>() {
+abstract class BaseRecyclerAdapter<T, W : Any>(context: Context) : RecyclerView.Adapter<BaseViewHolder<W>>() {
 
     protected var mData: MutableList<W>? = null
     protected var mLayoutInflator: LayoutInflater
