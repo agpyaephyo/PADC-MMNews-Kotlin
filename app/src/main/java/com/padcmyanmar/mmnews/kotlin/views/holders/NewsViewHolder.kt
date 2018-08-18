@@ -11,6 +11,12 @@ import kotlinx.android.synthetic.main.view_item_news.view.*
 
 class NewsViewHolder(itemView: View, private val mDelegate: NewsItemDelegate) : BaseViewHolder<NewsVO>(itemView) {
 
+    init {
+        itemView.flComment.setOnClickListener {
+            mDelegate.onTapComment(mData)
+        }
+    }
+
     override fun setData(data: NewsVO) {
         mData = data
         if (data.publication != null) {

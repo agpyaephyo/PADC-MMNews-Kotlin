@@ -17,10 +17,13 @@ import com.padcmyanmar.mmnews.kotlin.adapters.NewsAdapter
 import com.padcmyanmar.mmnews.kotlin.components.SmartScrollListener
 import com.padcmyanmar.mmnews.kotlin.data.models.NewsAppModel
 import com.padcmyanmar.mmnews.kotlin.data.vos.NewsVO
+import com.padcmyanmar.mmnews.kotlin.delegates.AddCommentDelegate
 import com.padcmyanmar.mmnews.kotlin.delegates.BeforeLoginDelegate
 import com.padcmyanmar.mmnews.kotlin.delegates.NewsItemDelegate
+import com.padcmyanmar.mmnews.kotlin.dialogs.AddCommentDialog
 import com.padcmyanmar.mmnews.kotlin.events.DataEvent
 import com.padcmyanmar.mmnews.kotlin.events.ErrorEvent
+import com.padcmyanmar.mmnews.kotlin.services.FirstService
 import com.padcmyanmar.mmnews.kotlin.views.pods.AccountControlViewPod
 import com.padcmyanmar.mmnews.kotlin.views.pods.BeforeLoginViewPod
 import kotlinx.android.synthetic.main.activity_home.*
@@ -29,7 +32,12 @@ import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HomeActivity : BaseActivity(), NewsItemDelegate, BeforeLoginDelegate {
+class HomeActivity : BaseActivity(), NewsItemDelegate, BeforeLoginDelegate, AddCommentDelegate {
+
+    override fun onAddNewComment(comment: String) {
+
+    }
+
     override fun onTapLogin() {
         /*
         val intent = Intent(applicationContext, AccountControlActivity::class.java)
@@ -285,19 +293,23 @@ class HomeActivity : BaseActivity(), NewsItemDelegate, BeforeLoginDelegate {
                 .forEach { Log.d(MMNewsApp.TAG, "Having $it is pretty awesome.") }
     }
 
-    override fun onTapComment() {
+    override fun onTapComment(news: NewsVO) {
+        val addCommentDialog = AddCommentDialog(this, this)
+        addCommentDialog.show()
+
+        val intent = Intent(applicationContext, FirstService::class.java)
+        startService(intent)
+    }
+
+    override fun onTapSendTo(news: NewsVO) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onTapSendTo() {
+    override fun onTapFavorite(news: NewsVO) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onTapFavorite() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onTapStatistics() {
+    override fun onTapStatistics(news: NewsVO) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

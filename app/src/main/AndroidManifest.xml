@@ -20,15 +20,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.NewsDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".activities.AccountControlActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".activities.AccountControlActivity2"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <service android:name=".services.FirstService" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

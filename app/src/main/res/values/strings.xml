@@ -29,6 +29,10 @@
     <string name="lbl_login">Login ၀င်ရန်</string>
     <string name="lbl_register">Register ပြုလုုပ်ရန်</string>
     <string name="account_control">Welcome</string>
+    <string name="screen_title_account_control">Account Control</string>
+    <string name="lbl_comment">Type your comment here</string>
+    <string name="btn_confirm_add_comment">Add Comment</string>
+    <string name="btn_cancel_add_comment">Cancel</string>
 
     <!--Township Array-->
     <string-array name="townships_array">

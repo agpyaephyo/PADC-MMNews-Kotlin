@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlAddComment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/margin_medium_2"
+    android:paddingLeft="@dimen/margin_medium"
+    android:paddingRight="@dimen/margin_medium"
+    android:paddingTop="@dimen/margin_medium_2">
+
+    <ImageView
+        android:id="@+id/ivProjectIcon"
+        android:layout_width="@dimen/icon_dimen_regular"
+        android:layout_height="@dimen/icon_dimen_regular"
+        android:src="@mipmap/ic_launcher_round" />
+
+    <TextView
+        android:id="@+id/tvProjectTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ivProjectIcon"
+        android:layout_alignTop="@+id/ivProjectIcon"
+        android:layout_marginLeft="@dimen/margin_medium"
+        android:layout_toRightOf="@+id/ivProjectIcon"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center_vertical"
+        android:text="@string/app_name"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_regular_3x" />
+
+    <TextView
+        android:id="@+id/lblComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ivProjectIcon"
+        android:layout_below="@+id/ivProjectIcon"
+        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_medium_2"
+        android:text="@string/lbl_comment"
+        android:textSize="@dimen/text_regular"
+        android:textColor="@color/primary_text"
+        />
+
+    <EditText
+        android:id="@+id/etComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ivProjectIcon"
+        android:layout_below="@+id/lblComment"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_small"
+        android:backgroundTint="@color/accent"
+        android:textColor="@color/primary_text"
+        android:textColorHint="@color/accent"
+        android:textSize="@dimen/text_regular_2x" />
+
+    <org.mmtextview.components.MMButton
+        android:id="@+id/btnConfirmAddComment"
+        style="@style/AccentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/etComment"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:text="@string/btn_confirm_add_comment" />
+
+    <org.mmtextview.components.MMButton
+        android:id="@+id/btnCancelAddComment"
+        style="@style/AccentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/btnConfirmAddComment"
+        android:layout_alignTop="@+id/btnConfirmAddComment"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:text="@string/btn_cancel_add_comment" />
+
+</RelativeLayout>

@@ -7,8 +7,8 @@ import com.padcmyanmar.mmnews.kotlin.fragments.BaseFragment
 
 class AccountControlAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
 
-    var mFragments: ArrayList<BaseFragment> = ArrayList()
-    var mFragmentTitles: ArrayList<String> = ArrayList()
+    private var mFragments: ArrayList<BaseFragment> = ArrayList()
+    private var mFragmentTitles: ArrayList<String> = ArrayList()
 
     override fun getItem(position: Int): Fragment {
         return mFragments[position]
