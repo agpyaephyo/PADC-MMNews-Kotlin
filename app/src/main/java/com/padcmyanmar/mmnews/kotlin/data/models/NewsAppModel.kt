@@ -7,7 +7,9 @@ import com.padcmyanmar.mmnews.kotlin.utils.AppConstants
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class NewsAppModel : BaseModel() {
+object NewsAppModel : BaseModel() {
+
+    /*
     companion object {
         private var INSTANCE: NewsAppModel? = null
         fun getInstance(): NewsAppModel {
@@ -19,6 +21,7 @@ class NewsAppModel : BaseModel() {
             return i!!
         }
     }
+    */
 
     private var mNewsPage: Int = 1
     private var mNewsData: HashMap<String, NewsVO> = HashMap()
@@ -33,11 +36,11 @@ class NewsAppModel : BaseModel() {
         NewsDataAgent.getInstance().loadNews(AppConstants.ACCESS_TOKEN, mNewsPage)
     }
 
-    fun getNews() : List<NewsVO> {
+    fun getNews(): List<NewsVO> {
         return ArrayList<NewsVO>(mNewsData.values)
     }
 
-    fun getNewsById(newsId : String) : NewsVO? {
+    fun getNewsById(newsId: String): NewsVO? {
         return mNewsData[newsId]
     }
 

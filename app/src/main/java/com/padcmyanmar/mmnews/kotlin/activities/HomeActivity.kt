@@ -58,55 +58,23 @@ class HomeActivity : BaseActivity(), NewsItemDelegate, BeforeLoginDelegate, AddC
         startActivity(intent)
     }
 
-    private var mNewsAdapter: NewsAdapter? = null
-    private var mSmartScrollListener: SmartScrollListener? = null
+    private lateinit var mNewsAdapter: NewsAdapter
+    private lateinit var mSmartScrollListener: SmartScrollListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
 
-        fab.setOnClickListener { view ->
-
-            var addResult: Int = addTheseTwo(2410, 1876)
-            var todayDate: Date? = null //Date()
-            var isToRestToday = isRestDay(todayDate)
-            var isToRestStr: String
-            if (isToRestToday) {
-                isToRestStr = "rest"
-            } else {
-                isToRestStr = "work"
-            }
-
-            var isTappingFAB: String
-            if (fab is FloatingActionButton)
-                isTappingFAB = "tapping FAB"
-            else
-                isTappingFAB = "not tapping FAB"
-
-            var degrees = listOf("M.Med (Int.Med)(Nus, S'pore)",
-                    "M.Med.Sc (Int,Med)",
-                    "MA cad MED (UK)",
-                    "Fellowship in interventional Cardiology (Seoul, Korea)",
-                    "Consultant Heart & General Physician")
-
-            var degreesPresentable = getDegreesPresentableWithWhile(degrees)
-
+        fab.setOnClickListener {
             /*
-            Snackbar.make(view, "The result is $addResult and today is to $isToRestStr. " +
-                    "Also you are $isTappingFAB", Snackbar.LENGTH_LONG)
+            Snackbar.make(it, "Tap on FAB", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
                     */
-
-            /*
-            Snackbar.make(view, "degreesPresentable : $degreesPresentable", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-                    */
-
             tryOutCollections()
         }
 
@@ -125,7 +93,7 @@ class HomeActivity : BaseActivity(), NewsItemDelegate, BeforeLoginDelegate, AddC
             override fun onListEndReach() {
                 Snackbar.make(rvNews, "Loading more data.", Snackbar.LENGTH_LONG).show()
                 swipeRefreshLayout.isRefreshing = true
-                NewsAppModel.getInstance().loadNews()
+                NewsAppModel.loadNews()
             }
         })
         rvNews.addOnScrollListener(mSmartScrollListener)
@@ -134,12 +102,12 @@ class HomeActivity : BaseActivity(), NewsItemDelegate, BeforeLoginDelegate, AddC
         rvNews.adapter = mNewsAdapter
 
         swipeRefreshLayout.isRefreshing = true
-        NewsAppModel.getInstance().loadNews()
+        NewsAppModel.loadNews()
 
         swipeRefreshLayout.setOnRefreshListener {
             val newsAdapterVal = mNewsAdapter
-            newsAdapterVal!!.clearData()
-            NewsAppModel.getInstance().forceLoadNews()
+            newsAdapterVal.clearData()
+            NewsAppModel.forceLoadNews()
         }
 
         navigationView.setNavigationItemSelectedListener {
@@ -287,7 +255,10 @@ class HomeActivity : BaseActivity(), NewsItemDelegate, BeforeLoginDelegate, AddC
             */
 
         degrees
-                .filter { it.startsWith("M") }
+                .filter {
+                    Log.d(MMNewsApp.TAG, "Each item in filter operator : $it")
+                    !it.startsWith("M")
+                }
                 .sortedBy { it }
                 .map { it.toUpperCase() }
                 .forEach { Log.d(MMNewsApp.TAG, "Having $it is pretty awesome.") }
